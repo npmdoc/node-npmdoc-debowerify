@@ -61,12 +61,164 @@
 
     <li class="apidocModuleLi"><a href="#apidoc.module.debowerify">module debowerify</a><ol>
 
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.debowerify.debowerify">
+            function <span class="apidocSignatureSpan"></span>debowerify
+            <span class="apidocSignatureSpan">(file, options)</span>
+            </a>
+
+        </li>
+
     </ol></li>
 
 </ol></div>
 
 <div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.debowerify" id="apidoc.module.debowerify">module debowerify</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.debowerify.debowerify" id="apidoc.element.debowerify.debowerify">
+        function <span class="apidocSignatureSpan"></span>debowerify
+        <span class="apidocSignatureSpan">(file, options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">debowerify = function (file, options) {
+  var bowerModules;
+  if (!options) options = {};
+
+  if (!/\.(_?js|c?jsx|(lit)?coffee(\.md)?|ls|ts|es6)$/.test(file)) return through();
+  var data = &#x27;&#x27;;
+
+  var tr = through(write, end);
+  return tr;
+
+  function write (buf) { data += buf; }
+  function end () {
+    if (bowerModules === undefined) {
+      var bowerOptions = getBowerOptions(options);
+
+      bower.commands.list({}, bowerOptions)
+        .on(&#x27;end&#x27;, function (map) {
+          bowerModules = map;
+          next();
+        });
+    } else {
+      next();
+    }
+
+    function next() {
+      var output;
+      try { output = parse(); }
+      catch (err) {
+        tr.emit(&#x27;error&#x27;, new Error(
+          err.toString().replace(&#x27;Error: &#x27;, &#x27;&#x27;) + &#x27; (&#x27; + file + &#x27;)&#x27;)
+        );
+      }
+
+      finish(output);
+    }
+  }
+
+  function finish (output) {
+    tr.queue(String(output));
+    tr.queue(null);
+  }
+
+<span class="apidocCodeCommentSpan">  /**
+   * @param {Object} module As provided by Bower
+   * @returns {Object} A dictionary of the module dependencies
+   */
+</span>  function getModuleDependencies (module) {
+    return [&#x27;dependencies&#x27;, &#x27;devDependencies&#x27;].reduce(function(dependencies, property) {
+      for (var name in module[property]) dependencies[name] = module[property][name];
+      return dependencies;
+    }, {});
+  };
+
+  /**
+   * @param {string} name
+   * @param {Object} [parent] The parent module, as provided by Bower
+   * @returns {Object|null} The module as provided by Bower or null if not found
+   */
+  function getModule (name, parent) {
+    parent = parent || bowerModules;
+    var dependencies = getModuleDependencies(parent);
+    for (var dependencyName in dependencies) {
+      var module = dependencies[name] || getModule(name, dependencies[dependencyName]);
+      if (module) return module;
+    }
+  };
+
+  /**
+   * @param {Object} Browserify options object containing possible &#x27;bowerOptions&#x27;
+   * @return {Object} Bower API options
+   */
+  function getBowerOptions(options) {
+    var bowerOptions = options.bowerOptions || {};
+
+    if (typeof bowerOptions.offline === &#x27;undefined&#x27;) {
+      bowerOptions.offline = true;
+    }
+
+    return bowerOptions;
+  };
+
+  function parse () {
+    var chunks = data.split(&#x27;&#x27;);
+
+    traverse(esprima.parse(data, {range: true}), {pre: function(node, parent, prop, idx) {
+      if (node.type !== &#x27;CallExpression&#x27; || node.callee.type !== &#x27;Identifier&#x27; || node.callee.name !== &#x27;require&#x27;) {
+        return;
+      }
+
+      var pth = node.arguments[0].value;
+      if(!pth) return;
+
+      var moduleName = getModuleName(pth);
+      var moduleSubPath = getModuleSubPath(pth);
+
+      var preferNPM = (typeof options.preferNPM === &#x27;boolean&#x27;) ? options.preferNPM :
+          (typeof options.preferNPM === &#x27;object&#x27; &#x26;&#x26; options.preferNPM.length &#x26;&#x26; options.preferNPM.indexOf(moduleName) !== -1);
+
+      if(preferNPM &#x26;&#x26; nodeCanResolve(moduleName)) return;
+
+      var module = getModule(moduleName);
+      if (!module) return;
+
+      if (module.missing) {
+        throw new Error(&#x27;could not resolve dependency &#x27; + moduleName +
+          &#x27; : bower returns the module as known but not found (did you forget to run bower install ?)&#x27;);
+      }
+
+      var pkgMeta = module.pkgMeta;
+      var requiredFilePaths = moduleSubPath;
+
+      if (!requiredFilePaths){
+        if (pkgMeta &#x26;&#x26; pkgMeta.main) {
+          requiredFilePaths = Array.isArray(pkgMeta.main) ? pkgMeta.main.filter(function (file) { return /\.js$/.test(file); }) : [
+pkgMeta.main ];
+        } else {
+          // if &#x27;main&#x27; wasn&#x27;t specified by this component, let&#x27;s try
+          // guessing that the main file is moduleName.js
+          requiredFilePaths = [ moduleName + &#x27;.js&#x27; ];
+        }
+      } else {
+        requiredFilePaths = [ requiredFilePaths ]
+      }
+
+      var relativeRequiredFilePaths = []
+
+      requiredFilePaths.forEach(function (requiredFilePath) {
+        var fullModulePath = path.resolve(path.join(module.canonicalDir, requiredFilePath));
+        var relativeRequiredFilePath = &#x27;./&#x27; + path.relative(path.dirname(file), fullModulePath);
+        relativeRequiredFilePaths.push(JSON.stringify(relativeRequiredFilePath))
+      }) ...</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
 
 </div>
 
