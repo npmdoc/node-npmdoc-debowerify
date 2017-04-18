@@ -1,9 +1,14 @@
-# api documentation for  [debowerify (v1.5.0)](https://github.com/eugeneware/debowerify#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-debowerify.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-debowerify) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-debowerify.svg)](https://travis-ci.org/npmdoc/node-npmdoc-debowerify)
+# npmdoc-debowerify
+
+#### api documentation for  [debowerify (v1.5.0)](https://github.com/eugeneware/debowerify#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-debowerify.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-debowerify) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-debowerify.svg)](https://travis-ci.org/npmdoc/node-npmdoc-debowerify)
+
 #### A browserify transform to enable the easy use of bower components in browserify client javascript projects. This can be used in conjunction with deamdify to require AMD components from bower as well.
 
-[![NPM](https://nodei.co/npm/debowerify.png?downloads=true)](https://www.npmjs.com/package/debowerify)
+[![NPM](https://nodei.co/npm/debowerify.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/debowerify)
 
-[![apidoc](https://npmdoc.github.io/node-npmdoc-debowerify/build/screenCapture.buildNpmdoc.browser._2Fhome_2Ftravis_2Fbuild_2Fnpmdoc_2Fnode-npmdoc-debowerify_2Ftmp_2Fbuild_2Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-debowerify/build/apidoc.html)
+- [https://npmdoc.github.io/node-npmdoc-debowerify/build/apidoc.html](https://npmdoc.github.io/node-npmdoc-debowerify/build/apidoc.html)
+
+[![apidoc](https://npmdoc.github.io/node-npmdoc-debowerify/build/screenCapture.buildCi.browser.%252Ftmp%252Fbuild%252Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-debowerify/build/apidoc.html)
 
 ![npmPackageListing](https://npmdoc.github.io/node-npmdoc-debowerify/build/screenCapture.npmPackageListing.svg)
 
@@ -17,8 +22,7 @@
 
 {
     "author": {
-        "name": "Eugene Ware",
-        "email": "eugene@noblesamurai.com"
+        "name": "Eugene Ware"
     },
     "bugs": {
         "url": "https://github.com/eugeneware/debowerify/issues"
@@ -57,17 +61,14 @@
     "main": "index.js",
     "maintainers": [
         {
-            "name": "nharbour",
-            "email": "eugene@noblesamurai.com"
+            "name": "nharbour"
         },
         {
-            "name": "eugeneware",
-            "email": "eugene@noblesamurai.com"
+            "name": "eugeneware"
         }
     ],
     "name": "debowerify",
     "optionalDependencies": {},
-    "readme": "ERROR: No README data found!",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/eugeneware/debowerify.git"
@@ -78,16 +79,6 @@
     "version": "1.5.0"
 }
 ```
-
-
-
-# <a name="apidoc.tableOfContents"></a>[table of contents](#apidoc.tableOfContents)
-
-#### [module debowerify](#apidoc.module.debowerify)
-
-
-
-# <a name="apidoc.module.debowerify"></a>[module debowerify](#apidoc.module.debowerify)
 
 
 
