@@ -1,6 +1,6 @@
 # npmdoc-debowerify
 
-#### api documentation for  [debowerify (v1.5.0)](https://github.com/eugeneware/debowerify#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-debowerify.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-debowerify) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-debowerify.svg)](https://travis-ci.org/npmdoc/node-npmdoc-debowerify)
+#### basic api documentation for  [debowerify (v1.5.0)](https://github.com/eugeneware/debowerify#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-debowerify.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-debowerify) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-debowerify.svg)](https://travis-ci.org/npmdoc/node-npmdoc-debowerify)
 
 #### A browserify transform to enable the easy use of bower components in browserify client javascript projects. This can be used in conjunction with deamdify to require AMD components from bower as well.
 
@@ -76,7 +76,8 @@
     "scripts": {
         "test": "mocha"
     },
-    "version": "1.5.0"
+    "version": "1.5.0",
+    "bin": {}
 }
 ```
 
